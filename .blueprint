@@ -1,0 +1,43 @@
+created:
+    - database/factories/VehicleTypeFactory.php
+    - database/factories/VehicleFactory.php
+    - database/factories/LicenseCategoryFactory.php
+    - database/factories/DrivingLicenseFactory.php
+    - database/factories/IncidentFactory.php
+    - database/factories/CitiFactory.php
+    - database/factories/CheckpointFactory.php
+    - database/factories/UserFactory.php
+    - database/factories/DriverFactory.php
+    - database/factories/RouteFactory.php
+    - database/migrations/2024_11_14_004314_create_vehicle_types_table.php
+    - database/migrations/2024_11_14_004315_create_vehicles_table.php
+    - database/migrations/2024_11_14_004316_create_license_categories_table.php
+    - database/migrations/2024_11_14_004317_create_driving_licenses_table.php
+    - database/migrations/2024_11_14_004318_create_incidents_table.php
+    - database/migrations/2024_11_14_004319_create_citis_table.php
+    - database/migrations/2024_11_14_004320_create_checkpoints_table.php
+    - database/migrations/2024_11_14_004321_create_users_table.php
+    - database/migrations/2024_11_14_004322_create_drivers_table.php
+    - database/migrations/2024_11_14_004323_create_routes_table.php
+    - database/migrations/2024_11_14_004324_create_driving_license_license_category_table.php
+    - app/Models/VehicleType.php
+    - app/Models/Vehicle.php
+    - app/Models/LicenseCategory.php
+    - app/Models/DrivingLicense.php
+    - app/Models/Incident.php
+    - app/Models/Citi.php
+    - app/Models/Checkpoint.php
+    - app/Models/User.php
+    - app/Models/Driver.php
+    - app/Models/Route.php
+models:
+    VehicleType: { name: 'string:45', relationships: { hasMany: Vehicle } }
+    Vehicle: { plate: 'string:10', relationships: { belongsTo: VehicleType, hasMany: Route } }
+    LicenseCategory: { name: 'string:45', relationships: { belongsToMany: DrivingLicense } }
+    DrivingLicense: { number: 'string:20', image: 'string:45', relationships: { belongsToMany: LicenseCategory } }
+    Incident: { type: 'string:45', description: text, datetime: timestamp, relationships: { belongsTo: Route } }
+    Citi: { name: 'string:45', relationships: { hasMany: Route } }
+    Checkpoint: { latitude: decimal, longitude: decimal, relationships: { belongsTo: Route } }
+    User: { dni: 'string:20', phone: 'string:10', first_name: 'string:45', last_name: 'string:45', birth_date: date, avatar: 'string:45', relationships: { hasOne: Driver } }
+    Driver: { relationships: { belongsTo: 'User, DrivingLicense', hasMany: Route } }
+    Route: { scheduled_start_date: datetime, scheduled_finish_date: datetime, start_date: datetime, finish_date: datetime, relationships: { belongsTo: 'Driver, Citi, Vehicle', hasMany: 'Incident, Location' } }

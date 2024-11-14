@@ -1,0 +1,64 @@
+models:
+  VehicleType:
+    name: string:45 unique
+    relationships:
+      hasMany: Vehicle
+
+  Vehicle:
+    plate: string:10 unique
+    relationships:
+      belongsTo: VehicleType
+      hasMany: Route
+
+  LicenseCategory:
+    name: string:45 unique
+    relationships:
+      belongsToMany: DrivingLicense
+
+  DrivingLicense:
+    number: string:20 unique
+    image: string:45
+    relationships:
+      belongsToMany: LicenseCategory
+
+  Incident:
+    type: string:45
+    description: text
+    datetime: timestamp
+    relationships:
+      belongsTo: Route
+
+  City:
+    name: string:45 unique
+    relationships:
+      hasMany: Route
+
+  Checkpoint:
+    latitude: decimal
+    longitude: decimal
+    relationships:
+      belongsTo: Route
+
+  User:
+    dni: string:20 unique
+    phone: string:10
+    first_name: string:45
+    last_name: string:45
+    birth_date: date
+    avatar: string:45
+    relationships:
+      hasOne: Driver
+
+  Driver:
+    relationships:
+      belongsTo: User, DrivingLicense
+      hasMany: Route
+
+  Route:
+    scheduled_start_date: datetime
+    scheduled_finish_date: datetime
+    start_date: datetime
+    finish_date: datetime
+    relationships:
+      belongsTo: Driver, City, Vehicle
+      hasMany: Incident, Location
