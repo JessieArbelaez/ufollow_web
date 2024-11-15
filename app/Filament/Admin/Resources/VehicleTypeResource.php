@@ -19,6 +19,10 @@ class VehicleTypeResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    protected static ?string $navigationGroup = 'Lists'; 
+
+    protected static ?int $navigationSort = 10;
+
     public static function form(Form $form): Form
     {
         return $form
@@ -26,7 +30,7 @@ class VehicleTypeResource extends Resource
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(45)
-                    ->unique(),
+                    ->unique(ignoreRecord: true),
             ]);
     }
 

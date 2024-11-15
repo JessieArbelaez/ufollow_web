@@ -28,8 +28,8 @@ class LicenseCategory extends Model
         'id' => 'integer',
     ];
 
-    public function drivingLicenses(): BelongsToMany
+    public function drivers(): BelongsToMany
     {
-        return $this->belongsToMany(DrivingLicense::class);
+        return $this->belongsToMany(Driver::class);
     }
 }

@@ -11,11 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('driving_licenses', function (Blueprint $table) {
-            $table->id();
-            $table->string('number', 20)->unique();
-            $table->string('image', 45);
-            $table->timestamps();
+        Schema::create('driver_license_category', function (Blueprint $table) {
+            $table->foreignId('driver_id');
+            $table->foreignId('license_category_id');
         });
     }
 
@@ -24,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('driving_licenses');
+        Schema::dropIfExists('driver_license_category');
     }
 };

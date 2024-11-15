@@ -17,7 +17,11 @@ class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-user-group';
+
+    protected static ?string $navigationGroup = 'Resources';
+
+    protected static ?int $navigationSort = 4;
 
     public static function form(Form $form): Form
     {
@@ -26,29 +30,29 @@ class UserResource extends Resource
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
+                Forms\Components\TextInput::make('dni')
+                    ->required()
+                    ->maxLength(20)
+                    ->unique(ignoreRecord: true),
                 Forms\Components\TextInput::make('email')
                     ->email()
                     ->required()
                     ->maxLength(255)
-                    ->unique(),
-                Forms\Components\DateTimePicker::make('email_verified_at'),
-                Forms\Components\TextInput::make('password')
-                    ->password()
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('dni')
-                    ->required()
-                    ->maxLength(20)
-                    ->unique(),
+                    ->unique(ignoreRecord: true),
                 Forms\Components\TextInput::make('phone')
                     ->tel()
                     ->required()
                     ->maxLength(10),
                 Forms\Components\DatePicker::make('birth_date')
                     ->required(),
-                Forms\Components\TextInput::make('avatar')
+                Forms\Components\TextInput::make('password')
+                    ->password()
                     ->required()
-                    ->maxLength(45),
+                    ->maxLength(255)
+                    ->visibleOn('create'),
+                Forms\Components\FileUpload::make('avatar')
+                    ->required()
+                    ->image(),
             ]);
     }
 
@@ -62,7 +66,8 @@ class UserResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email_verified_at')
                     ->dateTime()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('dni')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('phone')
@@ -70,8 +75,7 @@ class UserResource extends Resource
                 Tables\Columns\TextColumn::make('birth_date')
                     ->date()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('avatar')
-                    ->searchable(),
+                Tables\Columns\ImageColumn::make('avatar'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

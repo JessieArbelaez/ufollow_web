@@ -18,7 +18,8 @@ class Driver extends Model
      */
     protected $fillable = [
         'user_id',
-        'driving_license_id',
+        'driving_license_number',
+        'driving_license_image',
     ];
 
     /**
@@ -29,7 +30,6 @@ class Driver extends Model
     protected $casts = [
         'id' => 'integer',
         'user_id' => 'integer',
-        'driving_license_id' => 'integer',
     ];
 
     public function user(): BelongsTo
@@ -37,9 +37,9 @@ class Driver extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function drivingLicense(): BelongsTo
+    public function licenseCategories(): BelongsToMany
     {
-        return $this->belongsTo(DrivingLicense::class);
+        return $this->belongsToMany(LicenseCategory::class);
     }
 
     public function routes(): HasMany

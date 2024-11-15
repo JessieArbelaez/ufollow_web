@@ -17,21 +17,26 @@ class CheckpointResource extends Resource
 {
     protected static ?string $model = Checkpoint::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-map-pin';
+
+    protected static ?string $navigationGroup = 'Routes'; 
+
+    protected static ?int $navigationSort = 2;
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('latitude')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('longitude')
-                    ->required()
-                    ->numeric(),
                 Forms\Components\Select::make('route_id')
                     ->relationship('route', 'id')
-                    ->required(),
+                    ->required()
+                    ->columnSpanFull(),
+                // Forms\Components\TextInput::make('latitude')
+                //     ->required()
+                //     ->numeric(),
+                // Forms\Components\TextInput::make('longitude')
+                //     ->required()
+                //     ->numeric(),
             ]);
     }
 
@@ -39,15 +44,15 @@ class CheckpointResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('latitude')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('longitude')
-                    ->numeric()
-                    ->sortable(),
                 Tables\Columns\TextColumn::make('route.id')
                     ->numeric()
                     ->sortable(),
+                // Tables\Columns\TextColumn::make('latitude')
+                //     ->numeric()
+                //     ->sortable(),
+                // Tables\Columns\TextColumn::make('longitude')
+                //     ->numeric()
+                //     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

@@ -17,23 +17,28 @@ class IncidentResource extends Resource
 {
     protected static ?string $model = Incident::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-exclamation-triangle';
+
+    protected static ?string $navigationGroup = 'Routes';
+
+    protected static ?int $navigationSort = 3;
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('type')
-                    ->required()
-                    ->maxLength(45),
-                Forms\Components\Textarea::make('description')
-                    ->required()
-                    ->columnSpanFull(),
-                Forms\Components\DateTimePicker::make('datetime')
-                    ->required(),
                 Forms\Components\Select::make('route_id')
                     ->relationship('route', 'id')
                     ->required(),
+                Forms\Components\DateTimePicker::make('datetime')
+                    ->required(),
+                Forms\Components\TextInput::make('type')
+                    ->required()
+                    ->maxLength(45)
+                    ->columnSpanFull(),
+                Forms\Components\Textarea::make('description')
+                    ->required()
+                    ->columnSpanFull(),
             ]);
     }
 
@@ -41,14 +46,14 @@ class IncidentResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('type')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('datetime')
-                    ->dateTime()
-                    ->sortable(),
                 Tables\Columns\TextColumn::make('route.id')
                     ->numeric()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('datetime')
+                    ->dateTime()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('type')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

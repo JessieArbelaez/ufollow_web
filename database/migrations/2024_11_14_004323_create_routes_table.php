@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->dateTime('scheduled_start_date');
             $table->dateTime('scheduled_finish_date');
-            $table->dateTime('start_date');
-            $table->dateTime('finish_date');
+            $table->dateTime('start_date')->nullable();
+            $table->dateTime('finish_date')->nullable();
             $table->foreignId('driver_id');
             $table->foreignId('start_city_id');
             $table->foreignId('finish_city_id');

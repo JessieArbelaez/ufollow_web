@@ -17,7 +17,11 @@ class DriverResource extends Resource
 {
     protected static ?string $model = Driver::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-users';
+
+    protected static ?string $navigationGroup = 'Resources';
+
+    protected static ?int $navigationSort = 5;
 
     public static function form(Form $form): Form
     {
@@ -25,10 +29,16 @@ class DriverResource extends Resource
             ->schema([
                 Forms\Components\Select::make('user_id')
                     ->relationship('user', 'name')
-                    ->required(),
-                Forms\Components\Select::make('driving_license_id')
-                    ->relationship('drivingLicense', 'id')
-                    ->required(),
+                    ->required()
+                    ->unique(ignoreRecord: true),
+                // TODO: Categories
+                Forms\Components\TextInput::make('driving_license_number')
+                    ->required()
+                    ->maxLength(20)
+                    ->unique(ignoreRecord: true),
+                Forms\Components\FileUpload::make('driving_license_image')
+                    ->required()
+                    ->image(),
             ]);
     }
 
@@ -37,11 +47,10 @@ class DriverResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('user.name')
-                    ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('drivingLicense.id')
-                    ->numeric()
+                Tables\Columns\TextColumn::make('driving_license_number')
                     ->sortable(),
+                Tables\Columns\ImageColumn::make('driving_license_image'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

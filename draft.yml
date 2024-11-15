@@ -13,13 +13,7 @@ models:
   LicenseCategory:
     name: string:45 unique
     relationships:
-      belongsToMany: DrivingLicense
-
-  DrivingLicense:
-    number: string:20 unique
-    image: string:45
-    relationships:
-      belongsToMany: LicenseCategory
+      belongsToMany: Driver
 
   Incident:
     type: string:45
@@ -50,8 +44,10 @@ models:
       hasOne: Driver
 
   Driver:
+    driving_license_number: string:20 unique
+    driving_license_image: string:45
     relationships:
-      belongsTo: User, DrivingLicense
+      belongsTo: User, LicenseCategory
       hasMany: Route
 
   Route:

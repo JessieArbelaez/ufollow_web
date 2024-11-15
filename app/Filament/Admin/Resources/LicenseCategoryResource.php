@@ -17,7 +17,11 @@ class LicenseCategoryResource extends Resource
 {
     protected static ?string $model = LicenseCategory::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-identification';
+
+    protected static ?string $navigationGroup = 'Lists';
+
+    protected static ?int $navigationSort = 9;
 
     public static function form(Form $form): Form
     {
@@ -26,7 +30,7 @@ class LicenseCategoryResource extends Resource
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(45)
-                    ->unique(),
+                    ->unique(ignoreRecord: true),
             ]);
     }
 
