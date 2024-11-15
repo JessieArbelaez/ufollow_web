@@ -12,6 +12,8 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Dotswan\MapPicker\Fields\Map;
+use Filament\Forms\Set;
 
 class CheckpointResource extends Resource
 {
@@ -31,12 +33,27 @@ class CheckpointResource extends Resource
                     ->relationship('route', 'id')
                     ->required()
                     ->columnSpanFull(),
-                // Forms\Components\TextInput::make('latitude')
-                //     ->required()
-                //     ->numeric(),
-                // Forms\Components\TextInput::make('longitude')
-                //     ->required()
-                //     ->numeric(),
+                Forms\Components\Hidden::make('latitude'),
+                Forms\Components\Hidden::make('longitude'),
+                Map::make('location')
+                    ->label('Location')
+                    ->columnSpanFull()
+                    ->defaultLocation(latitude: 5.06889, longitude: -75.51738)
+                    ->reactive()
+                    ->afterStateUpdated(function (Set $set, ?array $state): void {
+                        $set('latitude',  $state['lat']);
+                        $set('longitude', $state['lng']);
+                    })
+                    ->afterStateHydrated(function ($state, $record, Set $set): void {
+                        $set('location', [
+                            'lat' => $record?->latitude,
+                            'lng' => $record?->longitude,
+                        ]);
+                    })
+                    ->extraStyles([
+                        'min-height: 400px',
+                        'border-radius: 10px'
+                    ]),
             ]);
     }
 
@@ -47,12 +64,12 @@ class CheckpointResource extends Resource
                 Tables\Columns\TextColumn::make('route.id')
                     ->numeric()
                     ->sortable(),
-                // Tables\Columns\TextColumn::make('latitude')
-                //     ->numeric()
-                //     ->sortable(),
-                // Tables\Columns\TextColumn::make('longitude')
-                //     ->numeric()
-                //     ->sortable(),
+                Tables\Columns\TextColumn::make('latitude')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('longitude')
+                    ->numeric()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

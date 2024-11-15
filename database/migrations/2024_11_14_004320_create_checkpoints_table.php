@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('checkpoints', function (Blueprint $table) {
             $table->id();
-            $table->decimal('latitude');
-            $table->decimal('longitude');
+            $table->decimal('latitude', 8, 5);
+            $table->decimal('longitude', 8, 5);
             $table->foreignId('route_id');
             $table->timestamps();
         });

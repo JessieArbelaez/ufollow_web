@@ -28,8 +28,6 @@ class Checkpoint extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'latitude' => 'decimal',
-        'longitude' => 'decimal',
         'route_id' => 'integer',
     ];
 
