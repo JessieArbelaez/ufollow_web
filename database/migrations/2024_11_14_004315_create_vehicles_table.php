@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('vehicles', function (Blueprint $table) {
             $table->id();
             $table->string('plate', 10)->unique();
-            $table->foreignId('vehicle_type_id');
+            $table->foreignId('vehicle_type_id')->references('id')->on('vehicle_types');
             $table->timestamps();
         });
     }

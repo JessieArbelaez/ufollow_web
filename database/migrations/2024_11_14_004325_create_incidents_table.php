@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('type', 45);
             $table->text('description');
             $table->timestamp('datetime');
-            $table->foreignId('route_id');
+            $table->foreignId('route_id')->references('id')->on('routes');
             $table->timestamps();
         });
     }

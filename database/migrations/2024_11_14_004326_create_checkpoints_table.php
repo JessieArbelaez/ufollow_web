@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->decimal('latitude', 8, 5);
             $table->decimal('longitude', 8, 5);
-            $table->foreignId('route_id');
+            $table->foreignId('route_id')->references('id')->on('routes');
             $table->timestamps();
         });
     }

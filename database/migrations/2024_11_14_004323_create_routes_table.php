@@ -17,10 +17,10 @@ return new class extends Migration
             $table->dateTime('scheduled_finish_date');
             $table->dateTime('start_date')->nullable();
             $table->dateTime('finish_date')->nullable();
-            $table->foreignId('driver_id');
-            $table->foreignId('start_city_id');
-            $table->foreignId('finish_city_id');
-            $table->foreignId('vehicle_id');
+            $table->foreignId('driver_id')->references('id')->on('drivers');
+            $table->foreignId('start_city_id')->references('id')->on('cities');
+            $table->foreignId('finish_city_id')->references('id')->on('cities');
+            $table->foreignId('vehicle_id')->references('id')->on('vehicles');
             $table->timestamps();
         });
     }

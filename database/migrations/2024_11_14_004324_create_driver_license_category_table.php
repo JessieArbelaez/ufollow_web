@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('driver_license_category', function (Blueprint $table) {
-            $table->foreignId('driver_id');
-            $table->foreignId('license_category_id');
+            $table->foreignId('driver_id')->references('id')->on('drivers');
+            $table->foreignId('license_category_id')->references('id')->on('license_categories');
         });
     }
 

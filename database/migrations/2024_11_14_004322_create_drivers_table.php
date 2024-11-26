@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('drivers', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->unique();
+            $table->foreignId('user_id')->unique()->references('id')->on('users');
             $table->string('driving_license_number', 20)->unique();
             $table->string('driving_license_image', 45);
             $table->timestamps();
