@@ -31,11 +31,15 @@ class DriverResource extends Resource
                     ->relationship('user', 'name')
                     ->required()
                     ->unique(ignoreRecord: true),
-                // TODO: Categories
                 Forms\Components\TextInput::make('driving_license_number')
                     ->required()
                     ->maxLength(20)
                     ->unique(ignoreRecord: true),
+                Forms\Components\Select::make('licenseCategories')
+                    ->relationship('licenseCategories', 'name')
+                    ->required()
+                    ->multiple()
+                    ->preload(),
                 Forms\Components\FileUpload::make('driving_license_image')
                     ->required()
                     ->image(),
@@ -49,6 +53,8 @@ class DriverResource extends Resource
                 Tables\Columns\TextColumn::make('user.name')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('driving_license_number')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('licenseCategories.name')
                     ->sortable(),
                 Tables\Columns\ImageColumn::make('driving_license_image'),
                 Tables\Columns\TextColumn::make('created_at')
